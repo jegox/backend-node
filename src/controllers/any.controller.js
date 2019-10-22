@@ -20,6 +20,7 @@ module.exports = {
   },
   update: async (data) => {
     return new Promise((resolve, reject) => {
+      if(!data._id) return reject('ID no encontrado')
       model.findOneAndUpdate(
         { _id: data._id, deletedAt: null }, 
         data,
