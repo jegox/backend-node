@@ -4,7 +4,7 @@ const model = require('../models/user.model')
 module.exports = {
   login: async (data) => {
     return await new Promise((resolve, reject) =>{
-      model.findOne({ email: data.email.toLowerCase(), deletedAt: null, contrasena: data.contrasena.toLowerCase() }, null,(err, doc) => {
+      model.findOne({ email: data.email, deletedAt: null, contrasena: data.contrasena }, null,(err, doc) => {
         if(!err) resolve({ doc })
         else reject(err)
       })
@@ -12,7 +12,6 @@ module.exports = {
   },
   create: (data) => {
     return new Promise((resolve, reject) => {
-      data.password = bcrypt.hashSync(data.password, salt)
       model.create(data, err => {
         if(!err) return resolve('Usuario creado correctamente.')
         return reject(err.message)
